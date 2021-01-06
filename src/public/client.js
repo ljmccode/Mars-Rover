@@ -1,18 +1,26 @@
 let store = {
     user: { name: "Student" },
+    // apod gets updated with json from api
     apod: '',
     rovers: ['Curiosity', 'Opportunity', 'Spirit'],
 }
 
 // add our markup to the page
 const root = document.getElementById('root')
+const button = document.querySelector('button')
+button.addEventListener('click', (e) => {
+    e.preventDefault();
+    console.log('click');
+})
 
 const updateStore = (store, newState) => {
     store = Object.assign(store, newState)
+    console.log(store)
     render(root, store)
 }
 
 const render = async (root, state) => {
+    console.log(state);
     root.innerHTML = App(state)
 }
 
@@ -65,6 +73,7 @@ const Greeting = (name) => {
 
 // Example of a pure function that renders infomation requested from the backend
 const ImageOfTheDay = (apod) => {
+    console.log('apod: ', apod);
 
     // If image does not already exist, or it is not from today -- request it again
     const today = new Date()
@@ -94,12 +103,15 @@ const ImageOfTheDay = (apod) => {
 // ------------------------------------------------------  API CALLS
 
 // Example API call
+
 const getImageOfTheDay = (state) => {
     let { apod } = state
+    console.log(state);
 
     fetch(`http://localhost:3000/apod`)
         .then(res => res.json())
+        // apod is the data being sent from the app.get in index
         .then(apod => updateStore(store, { apod }))
 
-    return data
+    return apod
 }
