@@ -3,9 +3,7 @@ let store = {
     // apod gets updated with json from api
     apod: '',
     rovers: ['Curiosity', 'Opportunity', 'Spirit'],
-    curiosity: '',
-    opportunity: '',
-    spirit: ''
+    rover: ''
 }
 
 // let store = Immutable.Map({
@@ -27,21 +25,22 @@ const button = document.querySelector('button');
 button.addEventListener('click', (e) => {
     e.preventDefault();
     console.log('click');
-    let rover = ''
+    let roverName = ''
     if (document.getElementById('curiosityRadio').checked) {
-        rover = "curiosity"
+        roverName = "curiosity"
     }
     if (document.getElementById('opportunityRadio').checked) {
-        rover = "opportunity"
+        roverName = "opportunity"
     }
     if (document.getElementById('spiritRadio').checked) {
-        rover = "spirit"
+        roverName = "spirit"
     }
-    curiousityObj(store);
-    console.log("rover: ",rover);
+    grabRoverInfo(store, roverName);
+    console.log("rover: ", roverName);
 })
 
 const updateStore = (store, newState) => {
+    console.log(newState);
     store = Object.assign(store, newState)
     // console.log("store: ", store)
     console.log("update store render:");
@@ -56,7 +55,7 @@ const render = async (root, state) => {
 
 // create content
 const App = (state) => {
-    let { rovers, apod, curiosity } = state
+    let { rovers, rover } = state
 
     return `
         <header></header>
@@ -64,7 +63,7 @@ const App = (state) => {
             <h1>Mars Rover</h1>
             <section>
                 <h3>Welcome to the Mars Rover page!</h3>
-                ${curiosityInfo(curiosity)}
+                ${displayInfo(rover)}
             </section>
         </main>
         <footer></footer>
@@ -79,57 +78,16 @@ window.addEventListener('load', () => {
 
 // ------------------------------------------------------  COMPONENTS
 
-// Pure function that renders conditional information -- THIS IS JUST AN EXAMPLE, you can delete it.
-// const Greeting = (name) => {
-//     if (name) {
-//         return `
-//             <h1>Welcome, ${name}!</h1>
-//         `
-//     }
 
-//     return `
-//         <h1>Hello!</h1>
-//     `
-// }
-
-// Example of a pure function that renders infomation requested from the backend
-// const ImageOfTheDay = (apod) => {
-//     // console.log('apod: ', apod);
-
-//     // If image does not already exist, or it is not from today -- request it again
-//     const today = new Date()
-//     const photodate = new Date(apod.date)
-//     // console.log(photodate.getDate(), today.getDate());
-
-//     // console.log(photodate.getDate() === today.getDate());
-//     if (!apod || apod.date === today.getDate() ) {
-//         getImageOfTheDay(store)
-//     }
-
-//     // check if the photo of the day is actually type video!
-//     if (apod.media_type === "video") {
-//         return (`
-//             <p>See today's featured video <a href="${apod.url}">here</a></p>
-//             <p>${apod.title}</p>
-//             <p>${apod.explanation}</p>
-//         `)
-//     } else {
-//         return (`
-//             <img src="${apod.image.url}" height="350px" width="100%" />
-//             <p>${apod.image.explanation}</p>
-//         `)
-//     }
-// }
-
-const curiosityInfo = (curiosity) => {
-    if (!curiosity) {
+const displayInfo = (rover) => {
+    if (!rover) {
         return (`
             <p>Select a rover to see the latest pictures</p>
         `)
     } else {
         return (`
-        <img src="${curiosity.curiosity.photos[0].img_src}" height="350px" width="auto" />
-        <p>${curiosity.curiosity.photos[0].camera.full_name}</p>
+        <img src="${rover.roverInfo.photos[0].img_src}" height="350px" width="auto" />
+        <p>${rover.roverInfo.photos[0].camera.full_name}</p>
     `)
     }
 }
@@ -149,15 +107,33 @@ const curiosityInfo = (curiosity) => {
 //     return apod
 // }
 
-const curiousityObj = (state) => {
-    let { curiosity } = state
+const grabRoverInfo = (state, roverName) => {
+    let { rover } = state
+    switch(roverName) {
+        case 'curiosity':
+            fetch(`http://localhost:3000/curiosity`)
+                .then(res => res.json())
+                // curiosity is the data being sent from the app.get in index
+                .then(rover => updateStore(store, { rover }))
 
-    fetch(`http://localhost:3000/curiosity`)
-        .then(res => res.json())
-        // curiosity is the data being sent from the app.get in index
-        .then(curiosity => updateStore(store, { curiosity }))
+            return rover
+        case 'opportunity':
+            fetch(`http://localhost:3000/opportunity`)
+                .then(res => res.json())
+                // curiosity is the data being sent from the app.get in index
+                .then(rover => updateStore(store, { rover }))
 
-    return curiosity
+            return rover
+        case 'spirit':
+            fetch(`http://localhost:3000/spirit`)
+                .then(res => res.json())
+                // curiosity is the data being sent from the app.get in index
+                .then(rover => updateStore(store, { rover }))
+
+            return rover
+        default:
+            console.log('There was an error');
+    }
 }
 
  
