@@ -21,13 +21,24 @@ let store = {
 // }
 
 // add our markup to the page
-const root = document.getElementById('root')
-const button = document.querySelector('button')
+const root = document.getElementById('root');
+const button = document.querySelector('button');
+
 button.addEventListener('click', (e) => {
     e.preventDefault();
     console.log('click');
+    let rover = ''
+    if (document.getElementById('curiosityRadio').checked) {
+        rover = "curiosity"
+    }
+    if (document.getElementById('opportunityRadio').checked) {
+        rover = "opportunity"
+    }
+    if (document.getElementById('spiritRadio').checked) {
+        rover = "spirit"
+    }
     curiousityObj(store);
-    console.log(store);
+    console.log("rover: ",rover);
 })
 
 const updateStore = (store, newState) => {
@@ -148,3 +159,5 @@ const curiousityObj = (state) => {
 
     return curiosity
 }
+
+ 
