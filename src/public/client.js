@@ -35,7 +35,6 @@ const button = document.querySelector('button');
 window.addEventListener('load', () => {
     console.log('Window load render');
     const slideshowContainer = document.getElementById('slideshow-container');
-    let slideIndex = 1;
     render(root, store)
 })
 
@@ -59,6 +58,7 @@ button.addEventListener('click', (e) => {
     if (document.getElementById('spiritRadio').checked) {
         roverName = "spirit"
     }
+
     grabRoverInfo(store, roverName);
     console.log("rover: ", roverName);
 })
@@ -150,35 +150,36 @@ const generateSlideDiv = (rover) => {
     }
     const prevArrow = document.createElement("a");
     prevArrow.className = "prev"
-    prevArrow.setAttribute('onclick', 'plusSlides(-1)')
+    prevArrow.setAttribute('onclick', 'updateSlideIndex.plusSlides(-1)')
     prevArrow.innerHTML = "&#10094"
     fragment.appendChild(prevArrow);
     const nextArrow = document.createElement("a");
     nextArrow.className = "next"
-    nextArrow.setAttribute('onclick', 'plusSlides(1)')
+    nextArrow.setAttribute('onclick', 'updateSlideIndex.plusSlides(1)')
     nextArrow.innerHTML = "&#10095"
     fragment.appendChild(nextArrow);
-    console.log("fragment: ", fragment)
-
     const slideshowContainer = document.getElementById('slideshow-container');
-    console.log(slideshowContainer)
     slideshowContainer.appendChild(fragment)
 
 }
 
-function plusSlides(n) {
-    showSlides(slideIndex += n);
-}
 
-function currentSlide(n) {
-    showSlides(slideIndex = n);
-}
+const updateSlideIndex = (function () {
+    let slideIndex = 1;
+    return {
+        plusSlides: function (n) {
+            showSlides(slideIndex += n);
+        }
+    }
+})();
 
 function showSlides(n) {
     let i;
-    let slides = document.querySelector(".slideDiv");
+    let slideIndex = n
+    let slides = document.getElementsByClassName("rover-slide");
     
-    console.log("slides: ", slides)
+    console.log("slide index: ", slideIndex)
+    
 
     if (n > slides.length) { slideIndex = 1 }
     if (n < 1) { slideIndex = slides.length }
