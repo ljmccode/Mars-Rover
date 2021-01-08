@@ -2,8 +2,7 @@
 body {
   display: flex;
   flex-direction: column;
-  font-family: Arial;
-  min-height: 100vh;
+  align-items: center;
 }
 
 header {
@@ -13,6 +12,7 @@ header {
 main {
   flex: 1;
   padding: 20px;
+  text-align: center;
 }
 
 footer {
@@ -38,21 +38,56 @@ footer {
 
 
 /* -------------------  Image slider  -------------- */
-.mySlides {
-  display: none
-}
 
-img {
-  vertical-align: middle;
-}
-
-.slideshow-container {
+#slideshow-container {
   max-width: 1000px;
   position: relative;
   margin: auto;
 }
 
-/* Next & previous buttons */
+.rover-name {
+  color: black;
+  font-weight: bold;
+  font-size: 24px;
+  padding: 8px 12px;
+  position: absolute;
+  bottom: -30px;
+  width: 100%;
+  text-align: center;
+}
+
+.slide-details {
+  color: black;
+  font-size: 16px;
+  padding: 8px 12px;
+  position: absolute;
+  bottom: -75px;
+  width: 100%;
+  font-size: 
+  text-align: center;
+}
+
+.rover-slide {
+  text-align: center;
+  position: relative;
+}
+
+/* Form  */
+form, p {
+  text-align: center;
+  padding: 8px;
+}
+
+button {
+  display: block;
+  margin: 8px auto;
+}
+
+section {
+  text-align: center;
+  margin: 10px;
+}
+
 .prev, .next {
   cursor: pointer;
   position: absolute;
@@ -68,34 +103,16 @@ img {
   user-select: none;
 }
 
-/* Position the "next button" to the right */
+.prev {
+    left: 10px;
+}
+
 .next {
-  right: 0;
+  right: 10px;
   border-radius: 3px 0 0 3px;
 }
 
 /* On hover, add a black background color with a little bit see-through */
 .prev:hover, .next:hover {
   background-color: rgba(0,0,0,0.8);
-}
-
-/* Caption text */
-.text {
-  color: #f2f2f2;
-  font-size: 15px;
-  padding: 8px 12px;
-  position: absolute;
-  top: -8px;
-  width: 100%;
-  text-align: center;
-}
-
-.slide-details {
-  color: #f2f2f2;
-  font-size: 15px;
-  padding: 8px 12px;
-  position: absolute;
-  bottom: -8px;
-  width: 100%;
-  text-align: center;
 }
