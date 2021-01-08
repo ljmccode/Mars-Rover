@@ -6,7 +6,7 @@ const store = Immutable.Map({
 const updateStore = (store, newState) => {
     let roverInfo = newState.rover.roverInfo.photos
     console.log(roverInfo)
-    let roverArray = roverInfo.map(obj => {
+    let roverObj = roverInfo.map(obj => {
         return {
             name: obj.rover.name,
             launchDate: obj.rover.launch_date,
@@ -14,8 +14,7 @@ const updateStore = (store, newState) => {
             status: obj.rover.status,
             photos: obj.img_src
         }
-    })
-    let oneArray = roverArray.reduce((acc, curr, i, array) => {
+    }).reduce((acc, curr) => {
         acc["name"].push(curr.name)
         acc["launchDate"].push(curr.launchDate)
         acc["landingDate"].push(curr.landingDate)
@@ -24,7 +23,7 @@ const updateStore = (store, newState) => {
         return acc
     }, {name:[], launchDate: [], landingDate: [], status: [], photos: []})
     
-    newState = store.merge(oneArray)
+    newState = store.merge(roverObj)
     console.log("new State post merge: ", newState)
     render(root, newState);
 }
@@ -100,19 +99,6 @@ const displayInfo = (rover) => {
 }
 
 // ------------------------------------------------------  API CALLS
-
-// Example API call
-
-// const getImageOfTheDay = (state) => {
-//     let { apod } = state
-
-//     fetch(`http://localhost:3000/apod`)
-//         .then(res => res.json())
-//         // apod is the data being sent from the app.get in index
-//         .then(apod => updateStore(store, { apod }))
-
-//     return apod
-// }
 
 const grabRoverInfo = (state, roverName) => {
     let { rover } = state
