@@ -21,8 +21,7 @@ const updateStore = (store, newState) => {
         acc["status"].push(curr.status)
         acc["photos"].push(curr.photos)
         return acc
-    }, {name:[], launchDate: [], landingDate: [], status: [], photos: []})
-    
+    }, { name: [], launchDate: [], landingDate: [], status: [], photos: [] })
     newState = store.merge(roverObj)
     console.log("new State post merge: ", newState)
     render(root, newState);
@@ -75,6 +74,9 @@ const App = (state) => {
 // listening for load event because page should load before any JS is called
 window.addEventListener('load', () => {
     console.log('Window load render');
+    const slideshowContainer = document.getElementById('slideshow-container');
+    console.log(slideshowContainer)
+    let slideIndex = 1;
     render(root, store)
 })
 
@@ -89,12 +91,8 @@ const displayInfo = (rover) => {
             <p>Select a rover to see the latest pictures</p>
         `)
     } else {
-        return (`
-        <p>${rover.get('name')._tail.array[0]}</p>
-        <p>${rover.get('launchDate')._tail.array[0]}</p>
-        <img src="${rover.get('photos')._tail.array[0]}" height="350px" width="auto" />
-        
-    `)
+        generateSlideDiv(rover)
+        return `<p>Click on another rover to see their pictures</p>`
     }
 }
 
@@ -102,14 +100,14 @@ const displayInfo = (rover) => {
 
 const grabRoverInfo = (state, roverName) => {
     let { rover } = state
-    
-    switch(roverName) {
+
+    switch (roverName) {
         case 'curiosity':
             fetch(`http://localhost:3000/curiosity`)
                 .then(res => res.json())
                 // curiosity is the data being sent from the app.get in index
                 .then(rover => updateStore(store, { rover }))
-        
+
             return rover
         case 'opportunity':
             fetch(`http://localhost:3000/opportunity`)
@@ -123,30 +121,65 @@ const grabRoverInfo = (state, roverName) => {
                 // curiosity is the data being sent from the app.get in index
                 // .then(rover => console.log("rover info: ", res.json()))
                 .then(rover => updateStore(store, { rover }))
-                
+
             return rover
         default:
             console.log('There was an error');
     }
 }
 
+// ------------------------------------------------------  IMAGE SLIDER
 
-// const generateSlideDiv = (rover) => {
-//     const fragment = new DocumentFragment();
-//     for (let i = 0; i < rover.name.length; i++) {
-//         const slideDiv = document.createElement("div");
-//         sliveDiv.className = "rover-slide";
-//         slideDiv.innerHTML = `
-//         <img src="${rover.get('photos')._tail.array[i]}" height="350px" width="auto" />
-//         <p>${rover.get('name')._tail.array[i]}</p>
-//         <div class="slide-details">Launch Date: ${rover.get('launchDate')._tail.array[i]} Landing Date: ${rover.get('landingDate')._tail.array[i]} Status: ${rover.get('landingDate')._tail.array[i]} </div>
-//         `
-//         fragment.appendChild(slideDiv)
-//     }
-//     const arrows = `
-//     <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-//     <a class="next" onclick="plusSlides(1)">&#10095;</a>
-//     `
-//     fragment.appendChild(arrows)
-//     document.getElementById("#slideshow-container").appendChild(fragment)
-// }
+const generateSlideDiv = (rover) => {
+    const fragment = new DocumentFragment();
+    console.log("rover: ", rover)
+    for (let i = 0; i < rover.size; i++) {
+        const slideDiv = document.createElement("div");
+        slideDiv.className = "rover-slide";
+        slideDiv.innerHTML = `
+        <img src="${rover.get('photos')._tail.array[i]}" height="350px" width="auto" />
+        <p class="rover-name">${rover.get('name')._tail.array[i]}</p>
+        <div class="slide-details">Launch Date: ${rover.get('launchDate')._tail.array[i]} Landing Date: ${rover.get('landingDate')._tail.array[i]} Status: ${rover.get('status')._tail.array[i]} </div>
+        `
+        fragment.appendChild(slideDiv)
+    }
+    const prevArrow = document.createElement("a");
+    prevArrow.className = "prev"
+    prevArrow.innerText = "&#10094;"
+    fragment.appendChild(prevArrow);
+    const nextArrow = document.createElement("a");
+    nextArrow.className = "next"
+    nextArrow.innerText = "&#10095;"
+    fragment.appendChild(nextArrow);
+    console.log("fragment: ", fragment)
+
+    const slideshowContainer = document.getElementById('slideshow-container');
+    console.log(slideshowContainer)
+    slideshowContainer.appendChild(fragment)
+
+}
+
+function plusSlides(n) {
+    showSlides(slideIndex += n);
+}
+
+function currentSlide(n) {
+    showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+    let i;
+    let slides = document.getElementsByClassName("slideDiv");
+    document.getElementById('prev').setAttribute('onclick','plusSlides(-1)');
+    document.getElementById('next').setAttribute('onclick','plusSlides(1)');
+
+    console.log("slides: ", slides)
+
+    if (n > slides.length) { slideIndex = 1 }
+    if (n < 1) { slideIndex = slides.length }
+    for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+    }
+    slides[slideIndex - 1].style.display = "block";
+}
+
