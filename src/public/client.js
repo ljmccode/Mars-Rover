@@ -131,6 +131,22 @@ const grabRoverInfo = (state, roverName) => {
 }
 
 
-
-
- 
+// const generateSlideDiv = (rover) => {
+//     const fragment = new DocumentFragment();
+//     for (let i = 0; i < rover.name.length; i++) {
+//         const slideDiv = document.createElement("div");
+//         sliveDiv.className = "rover-slide";
+//         slideDiv.innerHTML = `
+//         <img src="${rover.get('photos')._tail.array[i]}" height="350px" width="auto" />
+//         <p>${rover.get('name')._tail.array[i]}</p>
+//         <div>Launch Date: ${rover.get('launchDate')._tail.array[i]} Landing Date: ${rover.get('landingDate')._tail.array[i]} Status: ${rover.get('landingDate')._tail.array[i]} </div>
+//         `
+//         fragment.appendChild(slideDiv)
+//     }
+//     const arrows = `
+//     <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+//     <a class="next" onclick="plusSlides(1)">&#10095;</a>
+//     `
+//     fragment.appendChild(arrows)
+//     document.getElementById("#slideshow-container").appendChild(fragment)
+// }
