@@ -1,26 +1,38 @@
-let store = {
-    user: { name: "Student" },
-    // apod gets updated with json from api
-    apod: '',
-    rovers: ['Curiosity', 'Opportunity', 'Spirit'],
-    rover: ''
+const store = Immutable.Map({
+    name: ''
+})
+
+// make update store a callback
+const updateStore = (store, newState) => {
+    let roverInfo = newState.rover.roverInfo.photos
+    console.log(roverInfo)
+    let roverArray = roverInfo.map(obj => {
+        return {
+            name: obj.rover.name,
+            launchDate: obj.rover.launch_date,
+            landingDate: obj.rover.landing_date,
+            status: obj.rover.status,
+            photos: obj.img_src
+        }
+    })
+    let oneArray = roverArray.reduce((acc, curr, i, array) => {
+        acc["name"].push(curr.name)
+        acc["launchDate"].push(curr.launchDate)
+        acc["landingDate"].push(curr.landingDate)
+        acc["status"].push(curr.status)
+        acc["photos"].push(curr.photos)
+        return acc
+    }, {name:[], launchDate: [], landingDate: [], status: [], photos: []})
+    
+    newState = store.merge(oneArray)
+    console.log("new State post merge: ", newState)
+    render(root, newState);
 }
-
-// let store = Immutable.Map({
-//     user: {
-//         first_name: 'John',
-//         last_name: 'Doe'
-//     })
-// }
-
-// const updateStore = (store, newState) => {
-//     const newStore = store.merge(newState)
-//     render(root, newStore);
-// }
 
 // add our markup to the page
 const root = document.getElementById('root');
 const button = document.querySelector('button');
+
 
 button.addEventListener('click', (e) => {
     e.preventDefault();
@@ -39,23 +51,14 @@ button.addEventListener('click', (e) => {
     console.log("rover: ", roverName);
 })
 
-const updateStore = (store, newState) => {
-    console.log(newState);
-    store = Object.assign(store, newState)
-    // console.log("store: ", store)
-    console.log("update store render:");
-    render(root, store)
-}
-
 const render = async (root, state) => {
-    console.log("state during render: ", state);
+    console.log("store during render: ", store);
     root.innerHTML = App(state)
 }
 
-
 // create content
 const App = (state) => {
-    let { rovers, rover } = state
+    // let { rover } = state
 
     return `
         <header></header>
@@ -63,7 +66,7 @@ const App = (state) => {
             <h1>Mars Rover</h1>
             <section>
                 <h3>Welcome to the Mars Rover page!</h3>
-                ${displayInfo(rover)}
+                ${displayInfo(state)}
             </section>
         </main>
         <footer></footer>
@@ -80,14 +83,18 @@ window.addEventListener('load', () => {
 
 
 const displayInfo = (rover) => {
-    if (!rover) {
+    console.log("rover: ", rover)
+
+    if (rover.get('name') === '') {
         return (`
             <p>Select a rover to see the latest pictures</p>
         `)
     } else {
         return (`
-        <img src="${rover.roverInfo.photos[0].img_src}" height="350px" width="auto" />
-        <p>${rover.roverInfo.photos[0].camera.full_name}</p>
+        <p>${rover.get('name')._tail.array[0]}</p>
+        <p>${rover.get('launchDate')._tail.array[0]}</p>
+        <img src="${rover.get('photos')._tail.array[0]}" height="350px" width="auto" />
+        
     `)
     }
 }
@@ -109,31 +116,35 @@ const displayInfo = (rover) => {
 
 const grabRoverInfo = (state, roverName) => {
     let { rover } = state
+    
     switch(roverName) {
         case 'curiosity':
             fetch(`http://localhost:3000/curiosity`)
                 .then(res => res.json())
                 // curiosity is the data being sent from the app.get in index
                 .then(rover => updateStore(store, { rover }))
-
+        
             return rover
         case 'opportunity':
             fetch(`http://localhost:3000/opportunity`)
                 .then(res => res.json())
                 // curiosity is the data being sent from the app.get in index
                 .then(rover => updateStore(store, { rover }))
-
             return rover
         case 'spirit':
             fetch(`http://localhost:3000/spirit`)
                 .then(res => res.json())
                 // curiosity is the data being sent from the app.get in index
+                // .then(rover => console.log("rover info: ", res.json()))
                 .then(rover => updateStore(store, { rover }))
-
+                
             return rover
         default:
             console.log('There was an error');
     }
 }
+
+
+
 
  
