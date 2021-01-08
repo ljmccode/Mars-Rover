@@ -139,7 +139,7 @@ const grabRoverInfo = (state, roverName) => {
 //         slideDiv.innerHTML = `
 //         <img src="${rover.get('photos')._tail.array[i]}" height="350px" width="auto" />
 //         <p>${rover.get('name')._tail.array[i]}</p>
-//         <div>Launch Date: ${rover.get('launchDate')._tail.array[i]} Landing Date: ${rover.get('landingDate')._tail.array[i]} Status: ${rover.get('landingDate')._tail.array[i]} </div>
+//         <div class="slide-details">Launch Date: ${rover.get('launchDate')._tail.array[i]} Landing Date: ${rover.get('landingDate')._tail.array[i]} Status: ${rover.get('landingDate')._tail.array[i]} </div>
 //         `
 //         fragment.appendChild(slideDiv)
 //     }
