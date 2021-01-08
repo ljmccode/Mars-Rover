@@ -34,7 +34,6 @@ const button = document.querySelector('button');
 // listening for load event because page should load before any JS is called
 window.addEventListener('load', () => {
     console.log('Window load render');
-    const slideshowContainer = document.getElementById('slideshow-container');
     render(root, store)
 })
 
@@ -163,12 +162,14 @@ const generateSlideDiv = (rover) => {
 
 }
 
-
 const updateSlideIndex = (function () {
-    let slideIndex = 1;
+    let slideIndex = 0;
     return {
         plusSlides: function (n) {
             showSlides(slideIndex += n);
+        },
+        updateIndex: function() {
+            slideIndex = 0
         }
     }
 })();
@@ -179,9 +180,10 @@ function showSlides(n) {
     let slides = document.getElementsByClassName("rover-slide");
     
     console.log("slide index: ", slideIndex)
+    console.log("slide length: ", slides.length)
     
 
-    if (n > slides.length) { slideIndex = 1 }
+    if (n >= slides.length) { updateSlideIndex.updateIndex() }
     if (n < 1) { slideIndex = slides.length }
     for (i = 0; i < slides.length; i++) {
         slides[i].style.display = "none";
