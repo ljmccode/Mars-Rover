@@ -31,10 +31,24 @@ const updateStore = (store, newState) => {
 const root = document.getElementById('root');
 const button = document.querySelector('button');
 
+// listening for load event because page should load before any JS is called
+window.addEventListener('load', () => {
+    console.log('Window load render');
+    const slideshowContainer = document.getElementById('slideshow-container');
+    let slideIndex = 1;
+    render(root, store)
+})
+
+const render = async (root, state) => {
+    console.log("store during render: ", store);
+    root.innerHTML = App(state)
+}
+
 
 button.addEventListener('click', (e) => {
     e.preventDefault();
-    console.log('click');
+    document.getElementById('slideshow-container').innerHTML = ""
+
     let roverName = ''
     if (document.getElementById('curiosityRadio').checked) {
         roverName = "curiosity"
@@ -49,10 +63,7 @@ button.addEventListener('click', (e) => {
     console.log("rover: ", roverName);
 })
 
-const render = async (root, state) => {
-    console.log("store during render: ", store);
-    root.innerHTML = App(state)
-}
+
 
 // create content
 const App = (state) => {
@@ -60,25 +71,15 @@ const App = (state) => {
 
     return `
         <header></header>
-        <main>
-            <h1>Mars Rover</h1>
-            <section>
-                <h3>Welcome to the Mars Rover page!</h3>
-                ${displayInfo(state)}
-            </section>
-        </main>
+        <h1>Welcome to the Mars Rover Page!</h1>
+        <section>
+        ${displayInfo(state)}
+        </section>
         <footer></footer>
     `
 }
 
-// listening for load event because page should load before any JS is called
-window.addEventListener('load', () => {
-    console.log('Window load render');
-    const slideshowContainer = document.getElementById('slideshow-container');
-    console.log(slideshowContainer)
-    let slideIndex = 1;
-    render(root, store)
-})
+
 
 // ------------------------------------------------------  COMPONENTS
 
@@ -88,11 +89,11 @@ const displayInfo = (rover) => {
 
     if (rover.get('name') === '') {
         return (`
-            <p>Select a rover to see the latest pictures</p>
+            <h3>Select a rover to see the latest pictures</h3>
         `)
     } else {
         generateSlideDiv(rover)
-        return `<p>Click on another rover to see their pictures</p>`
+        return `<h3>Click on another rover to see their pictures</h3>`
     }
 }
 
@@ -133,23 +134,29 @@ const grabRoverInfo = (state, roverName) => {
 const generateSlideDiv = (rover) => {
     const fragment = new DocumentFragment();
     console.log("rover: ", rover)
+    let display = "block"
     for (let i = 0; i < rover.size; i++) {
         const slideDiv = document.createElement("div");
         slideDiv.className = "rover-slide";
+        slideDiv.style.display = display
         slideDiv.innerHTML = `
-        <img src="${rover.get('photos')._tail.array[i]}" height="350px" width="auto" />
+        <img src="${rover.get('photos')._tail.array[i]}"/>
         <p class="rover-name">${rover.get('name')._tail.array[i]}</p>
         <div class="slide-details">Launch Date: ${rover.get('launchDate')._tail.array[i]} Landing Date: ${rover.get('landingDate')._tail.array[i]} Status: ${rover.get('status')._tail.array[i]} </div>
+        <a
         `
+        display = "none"
         fragment.appendChild(slideDiv)
     }
     const prevArrow = document.createElement("a");
     prevArrow.className = "prev"
-    prevArrow.innerText = "&#10094;"
+    prevArrow.setAttribute('onclick', 'plusSlides(-1)')
+    prevArrow.innerHTML = "&#10094"
     fragment.appendChild(prevArrow);
     const nextArrow = document.createElement("a");
     nextArrow.className = "next"
-    nextArrow.innerText = "&#10095;"
+    nextArrow.setAttribute('onclick', 'plusSlides(1)')
+    nextArrow.innerHTML = "&#10095"
     fragment.appendChild(nextArrow);
     console.log("fragment: ", fragment)
 
@@ -169,10 +176,8 @@ function currentSlide(n) {
 
 function showSlides(n) {
     let i;
-    let slides = document.getElementsByClassName("slideDiv");
-    document.getElementById('prev').setAttribute('onclick','plusSlides(-1)');
-    document.getElementById('next').setAttribute('onclick','plusSlides(1)');
-
+    let slides = document.querySelector(".slideDiv");
+    
     console.log("slides: ", slides)
 
     if (n > slides.length) { slideIndex = 1 }
