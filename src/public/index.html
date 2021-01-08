@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/immutable/3.8.2/immutable.min.js"></script>
-    <link rel="stylesheet" href="./assets/stylesheets/index.css">
     <link rel="stylesheet" href="./assets/stylesheets/resets.css">
+    <link rel="stylesheet" href="./assets/stylesheets/index.css">
     <title>Document</title>
 </head>
 
@@ -16,10 +16,7 @@
         <div id="root">
             <h1>Loading...</h1>
         </div>
-        <div id="slideshow-container"></div>
-    </main>
     <form>
-        <p>What rover would you like to search?</p>
         <input type="radio" id="curiosityRadio" name="rover" value="curiosity">
         <label for="curiosity">Curiosity</label>
         <input type="radio" id="opportunityRadio" name="rover" value="opportunity">
@@ -28,6 +25,9 @@
         <label for="spirit">Spirit</label>
         <button>Submit</button>
     </form>
+    <div id="slideshow-container"></div>
+    </main>
+    
 </body>
 
 <script src="./client.js"></script>
