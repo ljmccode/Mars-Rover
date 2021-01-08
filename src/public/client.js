@@ -5,7 +5,6 @@ const store = Immutable.Map({
 // make update store a callback
 const updateStore = (store, newState) => {
     let roverInfo = newState.rover.roverInfo.photos
-    console.log(roverInfo)
     let roverObj = roverInfo.map(obj => {
         return {
             name: obj.rover.name,
@@ -23,7 +22,6 @@ const updateStore = (store, newState) => {
         return acc
     }, { name: [], launchDate: [], landingDate: [], status: [], photos: [] })
     newState = store.merge(roverObj)
-    console.log("new State post merge: ", newState)
     render(root, newState);
 }
 
@@ -33,12 +31,10 @@ const button = document.querySelector('button');
 
 // listening for load event because page should load before any JS is called
 window.addEventListener('load', () => {
-    console.log('Window load render');
     render(root, store)
 })
 
 const render = async (root, state) => {
-    console.log("store during render: ", store);
     root.innerHTML = App(state)
 }
 
@@ -59,7 +55,6 @@ button.addEventListener('click', (e) => {
     }
 
     grabRoverInfo(store, roverName);
-    console.log("rover: ", roverName);
 })
 
 
@@ -84,8 +79,6 @@ const App = (state) => {
 
 
 const displayInfo = (rover) => {
-    console.log("rover: ", rover)
-
     if (rover.get('name') === '') {
         return (`
             <h3>Select a rover to see the latest pictures</h3>
@@ -132,7 +125,7 @@ const grabRoverInfo = (state, roverName) => {
 
 const generateSlideDiv = (rover) => {
     const fragment = new DocumentFragment();
-    console.log("rover: ", rover)
+
     let display = "block"
     for (let i = 0; i < rover.size; i++) {
         const slideDiv = document.createElement("div");
@@ -175,13 +168,8 @@ const updateSlideIndex = (function () {
 })();
 
 function showSlides(n) {
-    let i;
     let slideIndex = n
     let slides = document.getElementsByClassName("rover-slide");
-    
-    console.log("slide index: ", slideIndex)
-    console.log("slide length: ", slides.length)
-    
 
     if (n >= slides.length) { updateSlideIndex.updateIndex() }
     if (n < 1) { slideIndex = slides.length }
