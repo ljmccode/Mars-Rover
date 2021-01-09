@@ -2,14 +2,14 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const fetch = require('node-fetch')
 const path = require('path')
-const { clearScreenDown } = require('readline')
+const cors = require('cors')
 require('dotenv').config({path: path.resolve(__dirname, '../../.env')})
 
 
 const app = express()
 const port = 3000
 
-
+app.use(cors())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
