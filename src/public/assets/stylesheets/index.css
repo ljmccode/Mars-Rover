@@ -3,6 +3,8 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-image: url("../img/space2.2.jpg");
+  color: white;
 }
 
 header {
@@ -20,11 +22,12 @@ img {
   box-shadow: 20px 20px 50px grey;
   width: 100%;
   height: auto;
+  min-height: 300px;
 }
 
 #slideshow-container {
   width: 300px;
-  height: 300px;
+  min-height: 300px;
 }
 
 footer {
@@ -36,10 +39,12 @@ footer {
   /* use mobile */
   img{
     width: 100%;
+    min-height: 500px;
     height: auto;
   }
   #slideshow-container {
     min-width: 500px;
+    min-height: 500px;
     max-width: 80%;
     height: auto;
   }
@@ -69,8 +74,8 @@ footer {
     height: auto;
   }
   #slideshow-container {
-    min-width: 800px;
-    min-height: 800px;
+    min-width: 700px;
+    min-height: 700px;
   }
   
 }
@@ -84,7 +89,7 @@ footer {
 }
 
 .rover-name {
-  color: black;
+  color: white;
   font-weight: bold;
   font-size: 24px;
   padding: 25px;
@@ -102,6 +107,7 @@ footer {
   bottom: -75px; */
   width: 100%;
   text-align: center;
+  color:white;
 }
 
 .rover-slide {
@@ -109,7 +115,7 @@ footer {
   position: relative;
 }
 
-/* Form  */
+/* -------------------  Form  -------------- */
 form, p {
   text-align: center;
   padding: 8px;
