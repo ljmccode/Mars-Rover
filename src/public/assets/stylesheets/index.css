@@ -13,104 +13,85 @@ body {
   font-family: "Trispace";
 }
 
-header {
-  /* header styles */
-}
-
 main {
-  flex: 1;
   padding: 20px;
   text-align: center;
+  height: 100%;
 }
 
-img {
-  border-radius: 25%;
-  box-shadow: 20px 20px 50px grey;
-  width: 100%;
-  height: auto;
-  min-height: 300px;
+h1 {
+  font-size: 24px;
+  margin: 15px;
 }
 
-#slideshow-container {
-  width: 300px;
-  min-height: 300px;
+h3 {
+  font-size: 16px;
+  margin-top: 30px;
 }
 
-footer {
-  /* footer styles */
+/* -------------------  Form  -------------- */
+form, p {
+  text-align: center;
+  padding: 8px;
+  font-size: 12px;
 }
 
-/* -------------------  TABLET  --------------------- */
-@media (min-width: 768px) {
-  /* use mobile */
-  img{
-    width: 100%;
-    min-height: 500px;
-    height: auto;
-  }
-  #slideshow-container {
-    min-width: 500px;
-    min-height: 500px;
-    max-width: 80%;
-    height: auto;
-  }
+.button {
+  display: block;
+  cursor: pointer;
+  margin: 16px auto;
+  padding: .35em 1.2em;
+  border: 0.1em solid #ffffff;
+  border-radius: 0.12em;
+  text-decoration: none;
+  font-family: "Trispace";
+  font-weight: 300;
+  color: #ffffff;
+  text-align: center;
+  transition: all 0.2s;
+  width: 20%;
 }
 
-/* -------------------  DESKTOP  -------------------- */
-
-@media (min-width: 1224px) {
-  /* use mobile */
-  img{
-    width: 100%;
-    height: auto;
-  }
-  #slideshow-container {
-    min-width: 500px;
-    min-height: 500px;
-  }
-  
+.button:hover {
+  color: #000000;
+  background-color: #ffffff;
 }
-
-/* -------------------  LARGE SCREENS  -------------- */
-
-@media (min-width: 1824px) {
-  /* use mobile */
-  img{
-    width: 100%;
-    height: auto;
-  }
-  #slideshow-container {
-    min-width: 700px;
-    min-height: 700px;
-  }
-  
-}
-
 
 /* -------------------  Image slider  -------------- */
+section {
+  text-align: center;
+  margin: 10px;
+}
 
 #slideshow-container {
   position: relative;
   margin: auto;
+  width: 250px;
+  min-height: 250px;
+}
+
+img {
+  border-radius: 25%;
+  box-shadow: 10px 10px 20px grey;
+  width: 100%;
+  height: auto;
+  min-height: 250px;
 }
 
 .rover-name {
   color: white;
   font-weight: bold;
   font-size: 24px;
-  padding: 25px;
-  /* position: absolute;
-  bottom: -50px; */
+  padding: 15px;
   width: 100%;
   text-align: center;
+  margin-top: 15px;
 }
 
 .slide-details {
   color: black;
   font-size: 16px;
-  padding: 8px 12px;
-  /* position: absolute;
-  bottom: -75px; */
+  padding: 5px 12px;
   width: 100%;
   text-align: center;
   color:white;
@@ -119,28 +100,6 @@ footer {
 .rover-slide {
   text-align: center;
   position: relative;
-}
-
-/* -------------------  Form  -------------- */
-form, p {
-  text-align: center;
-  padding: 8px;
-}
-
-button {
-  display: block;
-  margin: 8px auto;
-  cursor: pointer;
-  border: 1px solid #888888;
-  background: #888888;
-  color: white;
-  padding: 8px;
-  border-radius: 10%;
-}
-
-section {
-  text-align: center;
-  margin: 10px;
 }
 
 .prev, .next {
@@ -171,3 +130,78 @@ section {
 .prev:hover, .next:hover {
   background-color: rgba(0,0,0,0.8);
 }
+
+
+/* -------------------  TABLET  --------------------- */
+
+@media (min-width: 768px) {
+  h1 {
+    font-size: 30px;
+  }
+  
+  form {
+    font-size: 16px;
+  }
+
+  img{
+    width: 100%;
+    min-height: 500px;
+    height: auto;
+    box-shadow: 20px 20px 50px grey;
+  }
+
+  #slideshow-container {
+    min-width: 500px;
+    min-height: 500px;
+    max-width: 80%;
+    height: auto;
+    margin-top: 16px;
+  }
+
+  .rover-name {
+    margin-top: 50px;
+  } 
+}
+
+/* -------------------  DESKTOP  -------------------- */
+
+@media (min-width: 1224px) {
+  /* use mobile */
+  img{
+    width: 100%;
+    height: auto;
+    min-height: 600px;
+    box-shadow: 20px 20px 50px grey;
+  }
+
+  #slideshow-container {
+    min-width: 600px;
+    min-height: 600px;
+  }
+
+  .rover-name {
+    margin-top: 50px;
+  } 
+  
+}
+
+/* -------------------  LARGE SCREENS  -------------- */
+
+@media (min-width: 1824px) {
+  /* use mobile */
+  img{
+    width: 100%;
+    height: auto;
+    min-height: 700px;
+    box-shadow: 20px 20px 50px grey;
+  }
+  #slideshow-container {
+    min-width: 700px;
+    min-height: 700px;
+  }
+  
+}
+
+
+
+
