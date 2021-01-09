@@ -28,6 +28,10 @@ footer {
 
 @media (min-width: 1224px) {
   /* use mobile */
+  img {
+    min-width: 500px;
+    min-height: 500px;
+  }
 }
 
 /* -------------------  LARGE SCREENS  -------------- */
@@ -40,7 +44,8 @@ footer {
 /* -------------------  Image slider  -------------- */
 
 #slideshow-container {
-  max-width: 1000px;
+  max-width: 500px;
+  min-width: 300px;
   position: relative;
   margin: auto;
 }
@@ -80,6 +85,11 @@ form, p {
 button {
   display: block;
   margin: 8px auto;
+  cursor: pointer;
+  border: 1px solid #888888;
+  background: #888888;
+  color: white;
+  padding: 8px;
 }
 
 section {
