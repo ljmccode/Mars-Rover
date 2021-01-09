@@ -12,7 +12,8 @@ const updateState = (state, newState) => {
             launchDate: obj.rover.launch_date,
             landingDate: obj.rover.landing_date,
             status: obj.rover.status.charAt(0).toUpperCase() + obj.rover.status.slice(1),
-            photos: obj.img_src
+            photos: obj.img_src,
+            date: obj.earth_date
         };
     }).reduce((acc, curr) => {
         acc['name'].push(curr.name);
@@ -20,8 +21,9 @@ const updateState = (state, newState) => {
         acc['landingDate'].push(curr.landingDate);
         acc['status'].push(curr.status);
         acc['photos'].push(curr.photos);
+        acc['date'].push(curr.date);
         return acc;
-    }, { name: [], launchDate: [], landingDate: [], status: [], photos: [] });
+    }, { name: [], launchDate: [], landingDate: [], status: [], photos: [], date: [] });
     newState = state.merge(roverObj);
     render(root, newState);
 };
@@ -128,6 +130,7 @@ const generateSlideDiv = (rover) => {
         slideDiv.innerHTML = `
         <img src="${rover.get('photos')._tail.array[i]}"/>
         <p class="rover-name">${rover.get('name')._tail.array[i]}</p>
+        <div class="slide-details">Photo Date: ${rover.get('date')._tail.array[i]}</div> 
         <div class="slide-details">Launch Date: ${rover.get('launchDate')._tail.array[i]}</div> 
         <div class="slide-details">Landing Date: ${rover.get('landingDate')._tail.array[i]}</div> 
         <div class="slide-details"> Status: ${rover.get('status')._tail.array[i]}</div>
