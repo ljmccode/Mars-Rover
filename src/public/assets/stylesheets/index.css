@@ -40,7 +40,7 @@ form, p {
   display: block;
   cursor: pointer;
   margin: 16px auto;
-  padding: .35em 1.2em;
+  padding: 8px 12px;
   border: 0.1em solid #ffffff;
   border-radius: 0.12em;
   text-decoration: none;
@@ -49,7 +49,7 @@ form, p {
   color: #ffffff;
   text-align: center;
   transition: all 0.2s;
-  width: 20%;
+  width: 25%;
 }
 
 .button:hover {
@@ -81,7 +81,7 @@ img {
 .rover-name {
   color: white;
   font-weight: bold;
-  font-size: 24px;
+  font-size: 18px;
   padding: 15px;
   width: 100%;
   text-align: center;
@@ -90,7 +90,7 @@ img {
 
 .slide-details {
   color: black;
-  font-size: 16px;
+  font-size: 12px;
   padding: 5px 12px;
   width: 100%;
   text-align: center;
@@ -156,11 +156,17 @@ img {
     max-width: 80%;
     height: auto;
     margin-top: 16px;
+    
   }
 
   .rover-name {
     margin-top: 50px;
+    font-size: 24px;
   } 
+
+  .slide-details {
+    font-size: 16px;
+  }
 }
 
 /* -------------------  DESKTOP  -------------------- */
