@@ -5,7 +5,6 @@ const store = Immutable.Map({
 // make update store a callback
 const updateStore = (store, newState) => {
     let roverInfo = newState.rover.roverInfo.photos
-    console.log("Rover info: ", roverInfo)
     let roverObj = roverInfo.map(obj => {
         return {
             name: obj.rover.name,
@@ -22,14 +21,13 @@ const updateStore = (store, newState) => {
         acc["photos"].push(curr.photos)
         return acc
     }, { name: [], launchDate: [], landingDate: [], status: [], photos: [] })
-    console.log(roverObj["landingDate"].length)
     newState = store.merge(roverObj)
     render(root, newState);
 }
 
 // add our markup to the page
 const root = document.getElementById('root');
-const button = document.querySelector('button');
+const button = document.querySelector('.button');
 
 // listening for load event because page should load before any JS is called
 window.addEventListener('load', () => {
@@ -66,12 +64,10 @@ const App = (state) => {
     // let { rover } = state
 
     return `
-        <header></header>
-        <h1>Welcome to the Mars Rover Page!</h1>
+        <h1>Welcome to the Mars Rover Page</h1>
         <section>
         ${displayInfo(state)}
         </section>
-        <footer></footer>
     `
 }
 
@@ -83,11 +79,11 @@ const App = (state) => {
 const displayInfo = (rover) => {
     if (rover.get('name') === '') {
         return (`
-            <h3>Select a rover to see the latest pictures</h3>
+            <h3>Select a rover to see the latest pictures:</h3>
         `)
     } else {
         generateSlideDiv(rover)
-        return `<h3>Click on another rover to see their pictures</h3>`
+        return `<h3>Click on another rover to see their pictures:</h3>`
     }
 }
 
@@ -100,7 +96,6 @@ const grabRoverInfo = (state, roverName) => {
         case 'curiosity':
             fetch(`http://localhost:3000/curiosity`)
                 .then(res => res.json())
-                // curiosity is the data being sent from the app.get in index
                 .then(rover => updateStore(store, { rover }))
 
             return rover
@@ -113,13 +108,11 @@ const grabRoverInfo = (state, roverName) => {
         case 'spirit':
             fetch(`http://localhost:3000/spirit`)
                 .then(res => res.json())
-                // curiosity is the data being sent from the app.get in index
-                // .then(rover => console.log("rover info: ", res.json()))
                 .then(rover => updateStore(store, { rover }))
 
             return rover
         default:
-            console.log('There was an error');
+            return ('There was an error');
     }
 }
 
@@ -127,7 +120,6 @@ const grabRoverInfo = (state, roverName) => {
 
 const generateSlideDiv = (rover) => {
     const fragment = new DocumentFragment();
-    console.log("Merged rover: ", rover.get("landingDate").size)
 
     let display = "block"
     for (let i = 0; i < rover.get("landingDate").size; i++) {
@@ -193,7 +185,6 @@ function showSlides(n) {
         slides[i].style.display = "none";
         
     }
-    console.log(slideIndex)
     slides[slideIndex -= 1].style.display = "block";
 }
 
