@@ -11,7 +11,7 @@ const updateStore = (store, newState) => {
             name: obj.rover.name,
             launchDate: obj.rover.launch_date,
             landingDate: obj.rover.landing_date,
-            status: obj.rover.status,
+            status: obj.rover.status.charAt(0).toUpperCase() + obj.rover.status.slice(1),
             photos: obj.img_src
         }
     }).reduce((acc, curr) => {
@@ -137,8 +137,9 @@ const generateSlideDiv = (rover) => {
         slideDiv.innerHTML = `
         <img src="${rover.get('photos')._tail.array[i]}"/>
         <p class="rover-name">${rover.get('name')._tail.array[i]}</p>
-        <div class="slide-details">Launch Date: ${rover.get('launchDate')._tail.array[i]} Landing Date: ${rover.get('landingDate')._tail.array[i]} Status: ${rover.get('status')._tail.array[i]} </div>
-        <a
+        <div class="slide-details">Launch Date: ${rover.get('launchDate')._tail.array[i]}</div> 
+        <div class="slide-details">Landing Date: ${rover.get('landingDate')._tail.array[i]}</div> 
+        <div class="slide-details"> Status: ${rover.get('status')._tail.array[i]}</div>
         `
         display = "none"
         fragment.appendChild(slideDiv)
