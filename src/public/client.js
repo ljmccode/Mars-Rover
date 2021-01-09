@@ -1,9 +1,10 @@
-const store = Immutable.Map({
+const state = Immutable.Map({
     name: ''
 })
 
-// make update store a callback
-const updateStore = (store, newState) => {
+// Maps out requested rover object and merges with previous state to create a new rover state
+// Passes new state to be rendered
+const updateState = (state, newState) => {
     let roverInfo = newState.rover.roverInfo.photos
     let roverObj = roverInfo.map(obj => {
         return {
@@ -21,24 +22,23 @@ const updateStore = (store, newState) => {
         acc["photos"].push(curr.photos)
         return acc
     }, { name: [], launchDate: [], landingDate: [], status: [], photos: [] })
-    newState = store.merge(roverObj)
+    newState = state.merge(roverObj)
     render(root, newState);
 }
 
-// add our markup to the page
 const root = document.getElementById('root');
 const button = document.querySelector('.button');
 
 // listening for load event because page should load before any JS is called
 window.addEventListener('load', () => {
-    render(root, store)
+    render(root, state)
 })
 
 const render = async (root, state) => {
     root.innerHTML = App(state)
 }
 
-
+// Gets value of rover selected from the DOM
 button.addEventListener('click', (e) => {
     e.preventDefault();
     document.getElementById('slideshow-container').innerHTML = ""
@@ -53,8 +53,8 @@ button.addEventListener('click', (e) => {
     if (document.getElementById('spiritRadio').checked) {
         roverName = "spirit"
     }
-
-    grabRoverInfo(store, roverName);
+    // Sends user choice to get fetched
+    grabRoverInfo(state, roverName);
 })
 
 
@@ -90,25 +90,25 @@ const displayInfo = (rover) => {
 // ------------------------------------------------------  API CALLS
 
 const grabRoverInfo = (state, roverName) => {
-    let { rover } = state
-
+    // Takes the user input and fetches appropriate data
+    // Updates state with JSON data fetched
     switch (roverName) {
         case 'curiosity':
             fetch(`http://localhost:3000/curiosity`)
                 .then(res => res.json())
-                .then(rover => updateStore(store, { rover }))
+                .then(rover => updateState(state, { rover }))
 
             return rover
         case 'opportunity':
             fetch(`http://localhost:3000/opportunity`)
                 .then(res => res.json())
                 // curiosity is the data being sent from the app.get in index
-                .then(rover => updateStore(store, { rover }))
+                .then(rover => updateState(state, { rover }))
             return rover
         case 'spirit':
             fetch(`http://localhost:3000/spirit`)
                 .then(res => res.json())
-                .then(rover => updateStore(store, { rover }))
+                .then(rover => updateState(state, { rover }))
 
             return rover
         default:
@@ -117,10 +117,9 @@ const grabRoverInfo = (state, roverName) => {
 }
 
 // ------------------------------------------------------  IMAGE SLIDER
-
+// Creates the HTML to append to the slideshow container from current state
 const generateSlideDiv = (rover) => {
     const fragment = new DocumentFragment();
-
     let display = "block"
     for (let i = 0; i < rover.get("landingDate").size; i++) {
         const slideDiv = document.createElement("div");
@@ -133,9 +132,11 @@ const generateSlideDiv = (rover) => {
         <div class="slide-details">Landing Date: ${rover.get('landingDate')._tail.array[i]}</div> 
         <div class="slide-details"> Status: ${rover.get('status')._tail.array[i]}</div>
         `
+        // Sets display for all divs to none after the first
         display = "none"
         fragment.appendChild(slideDiv)
     }
+    // Creates next/prev arrows for the image slider
     const prevArrow = document.createElement("a");
     prevArrow.className = "prev"
     prevArrow.setAttribute('onclick', 'updateSlideIndex.minusSlides()')
@@ -151,6 +152,7 @@ const generateSlideDiv = (rover) => {
 
 }
 
+// Initializes slide index number and updates index to move through images
 const updateSlideIndex = (function () {
     let slideIndex = 1;
     return {
@@ -171,12 +173,13 @@ const updateSlideIndex = (function () {
     }
 })();
 
+// hides previous image and reveals next image
 function showSlides(n) {
     let slideIndex = n
     let slides = document.getElementsByClassName("rover-slide");
     
-    if (n >= slides.length) { updateSlideIndex.updateIndex() }
-    if (n < 1) 
+    if (slideIndex >= slides.length) { updateSlideIndex.updateIndex() }
+    if (slideIndex < 1) 
     { 
         slideIndex = slides.length
         updateSlideIndex.updateIndexReverse(slides.length) 
