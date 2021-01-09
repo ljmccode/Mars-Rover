@@ -2,7 +2,7 @@
 
 This is a Mars rover dashboard that consumes the NASA API. Select between Curiosity, Opportunity, and Spirit to see the most recent images taken by that rover, as well as important information about the rover and its mission. This app focuses on utilizing pure functions and iterating over, reshaping, and accessing information from complex API responses.
 
-![Project Image](src/public/assets/img/mars-rover.png)
+![Project Image](src/public/assets/img/mars-rover1.png)
 
 ## Getting Started
 
