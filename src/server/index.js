@@ -18,21 +18,6 @@ app.use('/', express.static(path.join(__dirname, '../public')))
 
 // your API calls
 
-// want to show most recent images taken of that rover
-
-// example API call
-app.get('/apod', async (req, res) => {
-    
-    try {
-        let image = await fetch(`https://api.nasa.gov/planetary/apod?api_key=${process.env.API_KEY}`)
-            .then(res => res.json())
-        // sending image json to the /apod route
-        res.send({ image })
-    } catch (err) {
-        console.log('error:', err);
-    }
-})
-
 // API calls to each rover
 app.get('/curiosity', async (req, res) => {
     try {
