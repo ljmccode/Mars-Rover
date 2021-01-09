@@ -1,19 +1,19 @@
-const express = require('express')
-const bodyParser = require('body-parser')
-const fetch = require('node-fetch')
-const path = require('path')
-const cors = require('cors')
-require('dotenv').config({path: path.resolve(__dirname, '../../.env')})
+const express = require('express');
+const bodyParser = require('body-parser');
+const fetch = require('node-fetch');
+const path = require('path');
+const cors = require('cors');
+require('dotenv').config({path: path.resolve(__dirname, '../../.env')});
 
 
-const app = express()
-const port = 3000
+const app = express();
+const port = 3000;
 
-app.use(cors())
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
+app.use(cors());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
-app.use('/', express.static(path.join(__dirname, '../public')))
+app.use('/', express.static(path.join(__dirname, '../public')));
 
 
 // your API calls
@@ -22,31 +22,31 @@ app.use('/', express.static(path.join(__dirname, '../public')))
 app.get('/curiosity', async (req, res) => {
     try {
         let roverInfo = await fetch(`https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&page=1&api_key=${process.env.API_KEY}`)
-            .then(res => res.json())
-        res.send ({ roverInfo })
+            .then(res => res.json());
+        res.send ({ roverInfo });
     } catch (err) {
         console.log('error: ', err);
     }
-})
+});
 
 app.get('/opportunity', async (req, res) => {
     try {
         let roverInfo = await fetch(`https://api.nasa.gov/mars-photos/api/v1/rovers/opportunity/photos?sol=1000&page=1&api_key=${process.env.API_KEY}`)
-            .then(res => res.json())
-        res.send ({ roverInfo })
+            .then(res => res.json());
+        res.send ({ roverInfo });
     } catch (err) {
         console.log('error: ', err);
     }
-})
+});
 
 app.get('/spirit', async (req, res) => {
     try {
         let roverInfo = await fetch(`https://api.nasa.gov/mars-photos/api/v1/rovers/spirit/photos?sol=1000&page=1&api_key=${process.env.API_KEY}`)
-            .then(res => res.json())
-        res.send ({ roverInfo })
+            .then(res => res.json());
+        res.send ({ roverInfo });
     } catch (err) {
         console.log('error: ', err);
     }
-})
+});
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

@@ -8,7 +8,7 @@ This is a Mars rover dashboard that consumes the NASA API. Select between Curios
 
 1. After cloning the repository, install dependencies for this project by running `npm install`.
 
-2. To access the NASA developer API endpoints, retrieve an API key from https://api.nasa.gov/ and add to a local `.env` file.
+2. To access the NASA developer API endpoints, retrieve an API key from <https://api.nasa.gov/> and add to a local `.env` file.
 
 3. Run `npm start` in the terminal and go to `http:localhost:3000` to use the app.
 
