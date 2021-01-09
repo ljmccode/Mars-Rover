@@ -142,12 +142,12 @@ const generateSlideDiv = (rover) => {
     }
     const prevArrow = document.createElement("a");
     prevArrow.className = "prev"
-    prevArrow.setAttribute('onclick', 'updateSlideIndex.plusSlides(-1)')
+    prevArrow.setAttribute('onclick', 'updateSlideIndex.minusSlides()')
     prevArrow.innerHTML = "&#10094"
     fragment.appendChild(prevArrow);
     const nextArrow = document.createElement("a");
     nextArrow.className = "next"
-    nextArrow.setAttribute('onclick', 'updateSlideIndex.plusSlides(1)')
+    nextArrow.setAttribute('onclick', 'updateSlideIndex.plusSlides()')
     nextArrow.innerHTML = "&#10095"
     fragment.appendChild(nextArrow);
     const slideshowContainer = document.getElementById('slideshow-container');
@@ -156,13 +156,21 @@ const generateSlideDiv = (rover) => {
 }
 
 const updateSlideIndex = (function () {
-    let slideIndex = 0;
+    let slideIndex = 1;
     return {
-        plusSlides: function (n) {
-            showSlides(slideIndex += n);
+        plusSlides: function () {
+            slideIndex++
+            showSlides(slideIndex);
+        },
+        minusSlides: function () {
+            showSlides(slideIndex);
+            slideIndex--
         },
         updateIndex: function() {
             slideIndex = 0
+        },
+        updateIndexReverse: function(n) {
+            slideIndex = n
         }
     }
 })();
@@ -170,12 +178,18 @@ const updateSlideIndex = (function () {
 function showSlides(n) {
     let slideIndex = n
     let slides = document.getElementsByClassName("rover-slide");
-
+    
     if (n >= slides.length) { updateSlideIndex.updateIndex() }
-    if (n < 1) { slideIndex = slides.length }
+    if (n < 1) 
+    { 
+        slideIndex = slides.length
+        updateSlideIndex.updateIndexReverse(slides.length) 
+    }
     for (i = 0; i < slides.length; i++) {
         slides[i].style.display = "none";
+        
     }
-    slides[slideIndex - 1].style.display = "block";
+    console.log(slideIndex)
+    slides[slideIndex -= 1].style.display = "block";
 }
 
