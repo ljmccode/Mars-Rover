@@ -15,6 +15,11 @@ main {
   text-align: center;
 }
 
+img {
+  border-radius: 25%;
+  box-shadow: 20px 20px 50px grey
+}
+
 footer {
   /* footer styles */
 }
@@ -48,15 +53,17 @@ footer {
   min-width: 300px;
   position: relative;
   margin: auto;
+  
+  
 }
 
 .rover-name {
   color: black;
   font-weight: bold;
   font-size: 24px;
-  padding: 8px 12px;
-  position: absolute;
-  bottom: -30px;
+  padding: 25px;
+  /* position: absolute;
+  bottom: -50px; */
   width: 100%;
   text-align: center;
 }
@@ -65,8 +72,8 @@ footer {
   color: black;
   font-size: 16px;
   padding: 8px 12px;
-  position: absolute;
-  bottom: -75px;
+  /* position: absolute;
+  bottom: -75px; */
   width: 100%;
   text-align: center;
 }
