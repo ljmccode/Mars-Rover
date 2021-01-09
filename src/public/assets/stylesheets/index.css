@@ -17,7 +17,14 @@ main {
 
 img {
   border-radius: 25%;
-  box-shadow: 20px 20px 50px grey
+  box-shadow: 20px 20px 50px grey;
+  width: 100%;
+  height: auto;
+}
+
+#slideshow-container {
+  width: 300px;
+  height: 300px;
 }
 
 footer {
@@ -27,34 +34,53 @@ footer {
 /* -------------------  TABLET  --------------------- */
 @media (min-width: 768px) {
   /* use mobile */
+  img{
+    width: 100%;
+    height: auto;
+  }
+  #slideshow-container {
+    min-width: 500px;
+    max-width: 80%;
+    height: auto;
+  }
 }
 
 /* -------------------  DESKTOP  -------------------- */
 
 @media (min-width: 1224px) {
   /* use mobile */
-  img {
+  img{
+    width: 100%;
+    height: auto;
+  }
+  #slideshow-container {
     min-width: 500px;
     min-height: 500px;
   }
+  
 }
 
 /* -------------------  LARGE SCREENS  -------------- */
 
 @media (min-width: 1824px) {
   /* use mobile */
+  img{
+    width: 100%;
+    height: auto;
+  }
+  #slideshow-container {
+    min-width: 800px;
+    min-height: 800px;
+  }
+  
 }
 
 
 /* -------------------  Image slider  -------------- */
 
 #slideshow-container {
-  max-width: 500px;
-  min-width: 300px;
   position: relative;
   margin: auto;
-  
-  
 }
 
 .rover-name {
@@ -97,6 +123,7 @@ button {
   background: #888888;
   color: white;
   padding: 8px;
+  border-radius: 10%;
 }
 
 section {
@@ -107,7 +134,7 @@ section {
 .prev, .next {
   cursor: pointer;
   position: absolute;
-  top: 50%;
+  top: 40%;
   width: auto;
   padding: 16px;
   margin-top: -22px;
@@ -120,11 +147,11 @@ section {
 }
 
 .prev {
-    left: 10px;
+    left: 0;
 }
 
 .next {
-  right: 10px;
+  right: 0;
   border-radius: 3px 0 0 3px;
 }
 
