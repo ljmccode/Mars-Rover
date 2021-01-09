@@ -5,6 +5,7 @@ const store = Immutable.Map({
 // make update store a callback
 const updateStore = (store, newState) => {
     let roverInfo = newState.rover.roverInfo.photos
+    console.log("Rover info: ", roverInfo)
     let roverObj = roverInfo.map(obj => {
         return {
             name: obj.rover.name,
@@ -21,6 +22,7 @@ const updateStore = (store, newState) => {
         acc["photos"].push(curr.photos)
         return acc
     }, { name: [], launchDate: [], landingDate: [], status: [], photos: [] })
+    console.log(roverObj["landingDate"].length)
     newState = store.merge(roverObj)
     render(root, newState);
 }
@@ -125,9 +127,10 @@ const grabRoverInfo = (state, roverName) => {
 
 const generateSlideDiv = (rover) => {
     const fragment = new DocumentFragment();
+    console.log("Merged rover: ", rover.get("landingDate").size)
 
     let display = "block"
-    for (let i = 0; i < rover.size; i++) {
+    for (let i = 0; i < rover.get("landingDate").size; i++) {
         const slideDiv = document.createElement("div");
         slideDiv.className = "rover-slide";
         slideDiv.style.display = display
