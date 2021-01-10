@@ -24,7 +24,7 @@ app.get('/:rovername', async (req, res) => {
             .then(res => res.json());
         res.send ({ roverInfo });
     } catch (err) {
-        console.log('error: ', err);
+        res.send({ });
     }
 });
 

@@ -96,7 +96,14 @@ const grabRoverInfo = (state, roverName) => {
 
     fetch('http://localhost:3000/' + roverName)
         .then(res => res.json())
-        .then(rover => updateState(state, { rover }));
+        .then(rover => {
+            if (!rover.roverInfo.photos) {
+                console.log(rover.roverInfo.error.message)
+                return document.getElementById('slideshow-container').innerHTML = rover.roverInfo.error.message;
+            } else { 
+                updateState(state, { rover }); 
+            }
+        })
 
     return rover;
 };
