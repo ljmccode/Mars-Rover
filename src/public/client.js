@@ -93,29 +93,12 @@ const displayInfo = (rover) => {
 
 const grabRoverInfo = (state, roverName) => {
     let { rover } = state;
-    
-    switch (roverName) {
-    case 'curiosity':
-        fetch('http://localhost:3000/curiosity')
-            .then(res => res.json())
-            .then(rover => updateState(state, { rover }));
 
-        return rover;
-    case 'opportunity':
-        fetch('http://localhost:3000/opportunity')
-            .then(res => res.json())
-        // curiosity is the data being sent from the app.get in index
-            .then(rover => updateState(state, { rover }));
-        return rover;
-    case 'spirit':
-        fetch('http://localhost:3000/spirit')
-            .then(res => res.json())
-            .then(rover => updateState(state, { rover }));
+    fetch('http://localhost:3000/' + roverName)
+        .then(res => res.json())
+        .then(rover => updateState(state, { rover }));
 
-        return rover;
-    default:
-        return 'There was an error';
-    }
+    return rover;
 };
 
 // ------------------------------------------------------  IMAGE SLIDER
