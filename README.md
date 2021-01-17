@@ -12,8 +12,6 @@ This is a Mars rover dashboard that consumes the NASA API. Select between Curios
 
 3. Run `npm start` in the terminal and go to `http:localhost:3000` to use the app.
 
-4. Page is also hosted at <https://ljmccode.github.io/Mars-Rover/src/public/index.html>.
-
 ### Languages and Tools Used
 
 * Functional JavaScript
